@@ -1,0 +1,46 @@
+doctype
+html(lang="en")
+  head
+    title= "TB labs"
+    link(rel="stylesheet", type="text/css", href="css/gmap3-menu.css")
+    link(rel="stylesheet", type="text/css", href="css/tblab.css")
+    link(rel="stylesheet", type="text/css", href="css/bootstrap/css/bootstrap.css")
+    script(type="text/javascript", src="views/jquery.min.js")
+    script(type="text/javascript", src="http://maps.googleapis.com/maps/api/js?sensor=false")
+    script(type="text/javascript", src="views/gmap3.js")
+    script(type="text/javascript", src="views/gmap3-menu.js")
+    script(type="text/javascript", src="views/main.js")
+ 
+  body
+    form
+      #container.container
+        .navbar
+          .navbar-inner
+            a.brand(href="#") 
+              h3 Find TB Testing Centers
+            #feedback.pull-left
+              a.social-link.mailbox(rel="external", href="mailto:contact@tblab.in&subject=TB Locator Website Feedback", target="_blank", title="Send email to contact@tblab.in")
+              span.triangle.left-arrow Feedback
+              a.social-link.facebook(rel="external", href="https://www.facebook.com/", onclick="return social_window(650, 436,'facebook')", target="_blank", title="Share on facebook")
+              span#fb_count.triangle.left-arrow 2.8k
+              a.social-link.twitter(rel="external", href="https://twitter.com", onclick="return social_window(650, 436, 'twitter')", target="_blank", title="Share on Twitter")
+              span#t_count.triangle.left-arrow 4.6k
+            ul.nav.pull-right
+              li
+                a(href="#") News
+              li.active
+                a(href="#") find TB testing center within 
+                  select#radius(name="radius", tabindex="2")
+                    option(value="1") 1
+                    option(value="5", selected="selected") 5
+                    option(value="10") 10
+                    option(value="20") 20
+                    option(value="30") 25
+                    option(value="40") 40
+                    option(value="50") 50
+                  span#location-miles kms of
+        #directions
+        #googleMap
+        span.location-box
+          input.search-query(type="text", placeholder="Search", name="search")
+          button#locator_submit.location_go(type="submit") GO  

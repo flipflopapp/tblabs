@@ -1,0 +1,166 @@
+#container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+#directions{
+    position:absolute;
+    width: 23%;
+    right:1%;
+    height: 690px;
+    overflow:auto;
+}
+
+#googleMap{
+    border: 1px dashed #C0C0C0;
+    height: 100%;
+}
+
+.navbar {
+    margin-bottom: 0px !important;
+}
+
+.navbar > .navbar-inner {
+}
+
+.navbar-inner > .brand > h3 {
+    color: #f00000;
+}
+
+.navbar-inner > .brand > h3, 
+.nav > li,
+#feedback {
+    margin: 0px;
+    line-height: 40px;
+}
+
+.nav > li > a {
+    color: #0088cc !important;
+}
+
+#feedback {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#feedback * {
+    top: 5px;
+}
+
+.social-link {
+    position: relative;
+    padding: 0 0 15px 33px;
+    text-decoration: none;
+    margin-right: 10px;
+    outline: 0;
+}
+
+#feedback > .mailbox {
+    background: transparent url('../images/social_icons.gif') no-repeat -66px -34px;
+}
+
+#feedback > .facebook {
+    background: transparent url('../images/social_icons.gif') no-repeat 0 -34px;
+}
+
+#feedback > .twitter {
+    background: transparent url('../images/social_icons.gif') no-repeat -33px -34px;
+}
+
+.triangle {
+    position: relative;
+    padding: 3px 5px;
+    margin: 1em 0 3em;
+    margin-right:6px;
+    color:#232323;
+    background:#ddd;
+}
+}
+
+.triangle .left-arrow {
+    margin-left:11px;
+    background:#ddd;
+    font-family:'BebasNeueRegular';
+    font-size:.9em
+}
+
+.triangle:before{
+    content:"";
+    position:absolute;
+    bottom:-15px;left:10px;
+    border-width:15px 15px 0;
+    border-style:solid;
+    border-color:#ddd transparent;
+    width:0
+}
+
+.triangle.left-arrow:before{
+    top:5px;
+    left:-9px;
+    bottom:auto;
+    border-width:0 9px 9px 0;
+    border-color:transparent #ddd;
+}
+
+#container.opa .triangle{
+    background:#006bb7;
+    color:#ddd;
+}
+
+#container.opa .triangle.left-arrow{
+    background:#006bb7;
+}
+
+#container.opa .triangle:before{
+    border-color:#006bb7 transparent;
+}
+
+#container.opa .triangle.left-arrow:before{
+    border-color:transparent #006bb7;
+}
+
+.triangle .right-arrow {
+}
+
+.navbar-search {
+    top: 7px;
+}
+
+#radius {
+    width: 60px;
+    margin: 0 10px 0 10px;
+}
+
+#googleMap .gmnoprint {
+    display: none;
+}
+
+.location-box {
+    position: absolute;
+    top: 80px;
+    right: 20px;
+}
+
+.location-box > .search-query {
+    border-radius: 0px !important;
+    height: 40px !important;
+    width: 320px;
+}
+
+.location-box > .location_go {
+    background: #fff url('../images/magnify_glass.png') no-repeat center center;
+    border: 0;
+    cursor: pointer;
+    right: 0;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    text-indent: -999em;
+    vertical-align: middle;
+    display: inline;
+    position: absolute;
+    margin: 5px;
+}
