@@ -142,7 +142,8 @@
     background-color: lightgreen;
     filter:alpha(opacity=80);
     opacity:.8;
-    color: #fff;
+    color: #000;
+    font-size: 20px;
     padding: 20px;
 }
 
