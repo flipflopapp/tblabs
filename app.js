@@ -24,11 +24,33 @@ app.get('/', function(req,res) {
       , search = req.param('search')
       ;
 
-    if ( search === undefined ) {
-        res.render( 'indexjq.jade', {} );
-    } else {
-        console.log ( search );
-    }
+    res.render( 'indexjq.jade', {
+        radius: radius,
+        search: search,
+        results: results
+        } );
+});
+
+// http://localhost:3000/?radius=5&search=NH+24%2C+Gazipur%2C+New+Delhi&mycity=New+Delhi&mycountry=India&mypin=110091
+app.post('/', function(req, res) {
+    var radius = req.param('radius')
+      , search = req.param('search')
+      , mycity = req.param('mycity')
+      , mycountry = req.param('mycountry')
+      , mypin = req.param('mypin')
+      ;
+
+    res.render( 'indexjq.jade', {
+        radius: radius,
+        search: search,
+        mycity: mycity,
+        mycountry: mycountry,
+        mypin: mypin,
+        results: results
+        } );
+});
+
+app.post('/', function(req, res) {
 });
 
 app.get('/admin', function(req,res) {
