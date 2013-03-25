@@ -128,6 +128,7 @@
 #radius {
     width: 60px;
     margin: 0 10px 0 10px;
+    font-size: 20px;
 }
 
 #googleMap .gmnoprint {
@@ -138,19 +139,25 @@
     position: absolute;
     top: 80px;
     left: 20px;
+    background-color: lightgreen;
+    filter:alpha(opacity=80);
+    opacity:.8;
+    color: #fff;
+    padding: 20px;
 }
 
 .location-box > .search-query {
     border-radius: 0px !important;
     height: 40px !important;
     width: 320px;
+    font-size: 20px;
 }
 
 .location-box > .location_go {
     background: #fff url('../images/magnify_glass.png') no-repeat center center;
     border: 0;
     cursor: pointer;
-    right: 0;
+    right: 20px;
     height: 40px;
     width: 40px;
     padding: 0;
@@ -160,3 +167,4 @@
     position: absolute;
     margin: 5px;
 }
+

@@ -158,8 +158,15 @@ $(function() {
         geocoder.geocode(current, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK && results.length) {
                 var ac = results[0].address_components
-                  , address = ac[0].short_name + ", " + ac[1].short_name;
+                  , address = ac[0].short_name + ", " + ac[1].short_name + ", " + ac[2].short_name
+                  , mycity = ac[2].long_name
+                  , mycountry = ac[5].long_name
+                  , mypin = ac[6].long_name
+                  ;
                 $(".search-query")[0].setAttribute("value", address);
+                $('[name="mycity"]')[0].setAttribute("value", mycity);
+                $('[name="mycountry"]')[0].setAttribute("value", mycountry);
+                $('[name="mypin"]')[0].setAttribute("value", mypin);
             }
         });
       },

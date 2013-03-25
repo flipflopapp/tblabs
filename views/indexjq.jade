@@ -12,7 +12,7 @@ html(lang="en")
     script(type="text/javascript", src="views/main.js")
  
   body
-    form
+    form(method="GET")
       #container.container
         .navbar
           .navbar-inner
@@ -27,20 +27,27 @@ html(lang="en")
               span.triangle.left-arrow Feedback
             ul.nav.pull-left
               li.active
-                a(href="#") Find within 
-                  select#radius(name="radius", tabindex="2")
-                    option(value="1") 1
-                    option(value="5", selected="selected") 5
-                    option(value="10") 10
-                    option(value="20") 20
-                    option(value="30") 25
-                    option(value="40") 40
-                    option(value="50") 50
-                  span#location-miles kms of...
+                a(href="#") Search
+              li
+                a(href="#") Change City
               li
                 a(href="#") News on TB
         #directions
         #googleMap
         span.location-box
+          p within 
+            select#radius(name="radius", tabindex="2")
+              option(value="1") 1
+              option(value="5", selected="selected") 5
+              option(value="10") 10
+              option(value="20") 20
+              option(value="30") 25
+              option(value="40") 40
+              option(value="50") 50
+            span#location-miles kms of...
           input.search-query(type="text", placeholder="Search", name="search")
-          button#locator_submit.location_go(type="submit") GO 
+          button#locator_submit.location_go(type="submit") GO
+          // passed back to server
+          input(hidden="true", name="mycity") 
+          input(hidden="true", name="mycountry") 
+          input(hidden="true", name="mypin") 

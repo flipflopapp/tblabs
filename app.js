@@ -20,11 +20,15 @@ app.configure(function() {
 });
 
 app.get('/', function(req,res) {
-    res.render( 'indexjq.jade', {} );
-});
+    var radius = req.param('radius')
+      , search = req.param('search')
+      ;
 
-app.post('/', function(req,res) {
-
+    if ( search === undefined ) {
+        res.render( 'indexjq.jade', {} );
+    } else {
+        console.log ( search );
+    }
 });
 
 app.get('/admin', function(req,res) {
