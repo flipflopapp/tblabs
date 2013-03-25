@@ -125,10 +125,6 @@
 .triangle .right-arrow {
 }
 
-.navbar-search {
-    top: 7px;
-}
-
 #radius {
     width: 60px;
     margin: 0 10px 0 10px;
@@ -141,7 +137,7 @@
 .location-box {
     position: absolute;
     top: 80px;
-    right: 20px;
+    left: 20px;
 }
 
 .location-box > .search-query {

@@ -23,6 +23,10 @@ app.get('/', function(req,res) {
     res.render( 'indexjq.jade', {} );
 });
 
+app.post('/', function(req,res) {
+
+});
+
 app.get('/admin', function(req,res) {
 });
 

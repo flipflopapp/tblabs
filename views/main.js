@@ -1,7 +1,7 @@
 $(function() {
   var $map = $("#googleMap")
     , menu = new Gmap3Menu($map)
-    , current // current click event
+    , current = {} // current click event
     , m1  // marker "from"
     , m2  // marker "to"
     ;
@@ -138,4 +138,39 @@ $(function() {
       }
     }
   });
+
+  if (navigator.geolocation) {
+    var locationMarker = null;
+    navigator.geolocation.getCurrentPosition(
+      function( position ) {
+        current.latLng = new google.maps.LatLng(position.coords.latitude, 
+                                         position.coords.longitude);
+        $map.gmap3("get").setCenter(current.latLng);
+        if (locationMarker) {
+            return;
+        }
+        locationMarker = addMarker(
+          position.coords.latitude,
+          position.coords.longitude,
+          "My position"
+        );
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode(current, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK && results.length) {
+                var ac = results[0].address_components
+                  , address = ac[0].short_name + ", " + ac[1].short_name;
+                $(".search-query")[0].setAttribute("value", address);
+            }
+        });
+      },
+      function ( error ) {
+        console.log ("Something went wrong: ", error);
+      },
+      {
+        timeout: (5*1000),
+        maximumAge: (1000*60*15),
+        enableHighAccuracy: true
+      }
+    );
+  }
 });

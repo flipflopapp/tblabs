@@ -17,19 +17,17 @@ html(lang="en")
         .navbar
           .navbar-inner
             a.brand(href="#") 
-              h3 Find TB Testing Centers
-            #feedback.pull-left
-              a.social-link.mailbox(rel="external", href="mailto:contact@tblab.in&subject=TB Locator Website Feedback", target="_blank", title="Send email to contact@tblab.in")
-              span.triangle.left-arrow Feedback
+              h3 TB Testing Centers
+            #feedback.pull-right
               //a.social-link.facebook(rel="external", href="https://www.facebook.com/", onclick="return social_window(650, 436,'facebook')", target="_blank", title="Share on facebook")
               //span#fb_count.triangle.left-arrow 2.8k
               a.social-link.twitter(rel="external", href="https://twitter.com", onclick="return social_window(650, 436, 'twitter')", target="_blank", title="Share on Twitter")
               span#t_count.triangle.left-arrow 1.1k
-            ul.nav.pull-right
-              li
-                a(href="#") News
+              a.social-link.mailbox(rel="external", href="mailto:contact@tblab.in&subject=TB Locator Website Feedback", target="_blank", title="Send email to contact@tblab.in")
+              span.triangle.left-arrow Feedback
+            ul.nav.pull-left
               li.active
-                a(href="#") find TB testing center within 
+                a(href="#") Find within 
                   select#radius(name="radius", tabindex="2")
                     option(value="1") 1
                     option(value="5", selected="selected") 5
@@ -38,9 +36,11 @@ html(lang="en")
                     option(value="30") 25
                     option(value="40") 40
                     option(value="50") 50
-                  span#location-miles kms of
+                  span#location-miles kms of...
+              li
+                a(href="#") News on TB
         #directions
         #googleMap
         span.location-box
           input.search-query(type="text", placeholder="Search", name="search")
-          button#locator_submit.location_go(type="submit") GO  
+          button#locator_submit.location_go(type="submit") GO 
