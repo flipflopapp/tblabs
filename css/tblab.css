@@ -59,15 +59,15 @@
 }
 
 #feedback > .mailbox {
-    background: transparent url('../images/social_icons.gif') no-repeat -66px -34px;
+    background: transparent url('../css/images/social_icons.gif') no-repeat -66px -34px;
 }
 
 #feedback > .facebook {
-    background: transparent url('../images/social_icons.gif') no-repeat 0 -34px;
+    background: transparent url('../css/images/social_icons.gif') no-repeat 0 -34px;
 }
 
 #feedback > .twitter {
-    background: transparent url('../images/social_icons.gif') no-repeat -33px -34px;
+    background: transparent url('../css/images/social_icons.gif') no-repeat -33px -34px;
 }
 
 .triangle {
@@ -155,7 +155,7 @@
 }
 
 .location-box > .location_go {
-    background: #fff url('../images/magnify_glass.png') no-repeat center center;
+    background: #fff url('../css/images/magnify_glass.png') no-repeat center center;
     border: 0;
     cursor: pointer;
     right: 20px;
