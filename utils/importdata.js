@@ -1,27 +1,34 @@
 var mongoose = require('mongoose')
   , async = require('async')
   , geocoder = require('geocoder')
-  , config = require('./config').config
+  , config = require('../config').config
   ;
 
-Centers = mongoose.model('centers', new mongoose.Schema({
-    "Chest Clinic": String,
-    "Test Center Name": String,
-    "Address": String,
-    "PIN CODE": String,
-    "TYPE OF CENTER (GROUP)": String,
-    "State": String,
-    "Phone Number": String,
-    "Email": String,
-    "Fax": String,
-    "URL": String,
-    "Descriptions": String,
-    "Tags": String,
-    "loc": {
-        "lat": Number,
-        "lng": Number
+var CentersSchema = new mongoose.Schema({
+    ChestClinic: String,
+    TestCenterName: String,
+    CenterType: String,
+    Descriptions: String,
+    Address: String,
+    City: String,
+    State: String,
+    Country: String,
+    PinCode: String,
+    Phone: String,
+    Email: String,
+    Fax: String,
+    URL: String,
+    Tags: String,
+    loc: { 
+      type: {
+        lon: Number,
+        lat: Number
+      },
+      index: '2d'
     }
-}));
+});
+
+Centers = mongoose.model('centers', CentersSchema); 
 
 mongoose.connect(config.mongoDb);
 
@@ -35,7 +42,8 @@ Centers.find({}, function(err, recs) {
     console.log ( recs.length );
 
     async.forEachSeries ( recs, function(rec, callback) {
-        if ( rec.loc.lat && rec.loc.lng ) {
+        if ( rec.loc.lat && rec.loc.lat !== 0
+          && rec.loc.lng && rec.loc.lng !== 0) {
             callback();
             return;
         }
@@ -64,9 +72,9 @@ Centers.find({}, function(err, recs) {
 
 function getStringAddress(rec) {
     var address = ""
-                + rec["Test Center Name"]
+                + rec["TestCenterName"]
          + ", " + rec["Address"]
          + ", " + rec["State"]
-         + ", " + rec["PIN CODE"];
+         + ", " + rec["PinCode"];
     return address;
 };

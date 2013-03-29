@@ -3,6 +3,10 @@
     // Config for the App
     var AppCfg = { 
         zoom: 15,
+        current: {
+            address: "",
+            latLng: new google.maps.LatLng(28.6667, 77.2167)
+        },
         searchtxt: "New Delhi",
         localGMapTypes: ['route', 'neighborhood', 'sublocality', 'locality'],
         cityGMapType: ['administrative_area_level_2'],
@@ -13,11 +17,8 @@
 
     //These are sent to the server
     var SearchCfg = {
-        current: {
-            address: "",
-            latLng: new google.maps.LatLng(28.6667, 77.2167)
-        },
         radius: 5,
+        latlng: [0, 0],
         local: "",
         city: "",
         state: "",
@@ -30,18 +31,20 @@
     var NearbyTBLabs = Backbone.Model.extend({
         defaults: function() {
             return {
-                chestclinic: "",
-                centername: "",
-                centertype: "",
-                description: "",
-                address: "",
-                state: "",
-                pincode: "",
-                phone: "",
-                email: "",
-                fax: "",
-                url: "",
-                tags: "",
+                ChestClinic: "",
+                TestCenterName: "",
+                CenterType: "",
+                Description: "",
+                Address: "",
+                City: "",
+                State: "",
+                Country: "",
+                PinCode: "",
+                Phone: "",
+                Email: "",
+                Fax: "",
+                URL: "",
+                Tags: "",
                 loc: {
                     lat: 0,
                     lon: 0
@@ -54,7 +57,20 @@
     
     var NearbyTBLabsList = Backbone.Collection.extend({
         url: '/api/search',
-        model: NearbyTBLabs
+        model: NearbyTBLabs,
+        fetch: function() {
+            var me = this;
+            SearchCfg.latlng = [ AppCfg.current.latLng.jb, 
+                                 AppCfg.current.latLng.kb ];
+            $.ajax({
+                type: 'POST',
+                url: me.url,
+                data: SearchCfg, 
+                success: function(data) {
+                    console.log(data);
+                }
+            });
+        }
     });
 
     // View
@@ -63,7 +79,7 @@
         el: $("#container"),
 
         events: {
-            "submit": "doSearch"
+            "click #locator_submit": "doSearch"
         },
 
         render: function() {
@@ -73,13 +89,15 @@
 
         initialize: function() {
             if (!this.gMap) {
-                this.gMap = new MapView({collection: NearbyTBLabsList});
+                this.gMap = new MapView({collection: tblabcollection});
             } else {
                 this.gMap.delegateEvents();
             }
         },
 
         doSearch: function() {
+            tblabcollection.fetch();
+            console.log ( 'here' );
         }
     });
 
@@ -105,8 +123,8 @@
               },
               events:{
                 rightclick:function(map, event){
-                  SearchCfg.current = event;
-                  me.menu.open(SearchCfg.current);
+                  AppCfg.current = event;
+                  me.menu.open(AppCfg.current);
                 },
                 click: function(){
                   me.menu.close();
@@ -175,7 +193,7 @@
           // MENU : ITEM 5
           me.menu.add("Center here", "centerHere", 
             function(){
-                me.$el.gmap3("get").setCenter(SearchCfg.current.latLng);
+                me.$el.gmap3("get").setCenter(AppCfg.current.latLng);
                 me.menu.close();
             });
 
@@ -206,7 +224,7 @@
           // add marker and store it
           me.$el.gmap3({
             marker:{
-              latLng:SearchCfg.current.latLng,
+              latLng:AppCfg.current.latLng,
               options:{
                 draggable:true,
                 icon:new google.maps.MarkerImage("http://maps.gstatic.com/mapfiles/icon_green" + (isM1 ? "A" : "B") + ".png")
@@ -270,9 +288,9 @@
             me.locationMarker = null;
             navigator.geolocation.getCurrentPosition(
               function( position ) {
-                SearchCfg.current.latLng = new google.maps.LatLng(position.coords.latitude, 
+                AppCfg.current.latLng = new google.maps.LatLng(position.coords.latitude, 
                                                  position.coords.longitude);
-                me.$el.gmap3("get").setCenter(SearchCfg.current.latLng);
+                me.$el.gmap3("get").setCenter(AppCfg.current.latLng);
                 if (me.locationMarker) {
                     return;
                 }
@@ -282,7 +300,7 @@
                   "My position"
                 );
                 var geocoder = new google.maps.Geocoder();
-                geocoder.geocode(SearchCfg.current, function(results, status) {
+                geocoder.geocode(AppCfg.current, function(results, status) {
                     if (status == google.maps.GeocoderStatus.OK && results.length) {
                         var ac = results[0].address_components;
                         SearchCfg.local = me.doBreakupAddress(ac, AppCfg.localGMapTypes);
@@ -309,6 +327,8 @@
     });
 
     var app = new AppView();
+    var tblabcollection = new NearbyTBLabsList();
+
     app.render();
 
 }).call(this);

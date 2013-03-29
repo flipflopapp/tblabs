@@ -2,6 +2,7 @@ var express = require('express')
   , jade = require('jade')
   , path = require('path')
   , app = express()
+  , Centers = require('./database.js').Centers
   ;
   
 app.configure('development', function() {
@@ -20,37 +21,44 @@ app.configure(function() {
 });
 
 app.get('/', function(req,res) {
-    var radius = req.param('radius')
-      , search = req.param('search')
-      ;
-
-    res.render( 'indexjq.jade', {
-        radius: radius,
-        search: search,
-        results: results
-        } );
+    res.render( 'index.jade');
 });
 
-// http://localhost:3000/?radius=5&search=NH+24%2C+Gazipur%2C+New+Delhi&mycity=New+Delhi&mycountry=India&mypin=110091
-app.post('/', function(req, res) {
-    var radius = req.param('radius')
-      , search = req.param('search')
-      , mycity = req.param('mycity')
-      , mycountry = req.param('mycountry')
-      , mypin = req.param('mypin')
+app.post('/api/search', function(req, res) {
+    var me = this;
+    var radius = req.param('radius') * 1000
+      , latlng = req.param('latlng')
+      , local = req.param('local')
+      , city = req.param('city')
+      , state = req.param('state')
+      , country = req.param('country')
+      , pincode = req.param('pincode')
       ;
 
-    res.render( 'indexjq.jade', {
-        radius: radius,
-        search: search,
-        mycity: mycity,
-        mycountry: mycountry,
-        mypin: mypin,
-        results: results
-        } );
-});
+    console.log ( "radius : " + radius );
+    console.log ( "latlng : " + latlng );
+    console.log ( "local : " + local );
+    console.log ( "city : " + city );
+    console.log ( "state : " + state );
+    console.log ( "country: " + country);
+    console.log ( "pincode: " + pincode);
 
-app.post('/', function(req, res) {
+    Centers.find( {"loc":
+                    { $near:
+                      { $geometry:
+                        { type: "Point",
+                          coordinates: latlng },
+                        $maxDistance: radius
+                      } }
+                   }, function(err, list) {
+                       if (err) {
+                           console.log ( err );
+                           res.status(400).json ( err );
+                       } else {
+                           console.log ( list );
+                           res.status(200).json ( list );
+                       }
+                   } );
 });
 
 app.get('/admin', function(req,res) {
