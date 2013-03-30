@@ -54,6 +54,7 @@ app.post('/api/search', function(req, res) {
                            console.log ( err );
                            res.status(400).json ( err );
                        } else {
+                           console.log ('found ' + list.length);
                            res.status(200).json ( list );
                        }
                    } );
