@@ -2,38 +2,13 @@ var mongoose = require('mongoose')
   , async = require('async')
   , geocoder = require('geocoder')
   , config = require('../config').config
+  , Centers = require('../database').Centers
   ;
 
-var CentersSchema = new mongoose.Schema({
-    ChestClinic: String,
-    TestCenterName: String,
-    CenterType: String,
-    Descriptions: String,
-    Address: String,
-    City: String,
-    State: String,
-    Country: String,
-    PinCode: String,
-    Phone: String,
-    Email: String,
-    Fax: String,
-    URL: String,
-    Tags: String,
-    loc: { 
-      type: {
-        lon: Number,
-        lat: Number
-      },
-      index: '2d'
-    }
-});
-
-Centers = mongoose.model('centers', CentersSchema); 
-
-mongoose.connect(config.mongoDb);
-
 Centers.find({}, function(err, recs) {
-    var me = this;
+    var me = this
+      , notdone = new Array()
+      ;
     if (err) {
         console.log ('error');
         return;
@@ -43,30 +18,40 @@ Centers.find({}, function(err, recs) {
 
     async.forEachSeries ( recs, function(rec, callback) {
         if ( rec.loc.lat && rec.loc.lat !== 0
-          && rec.loc.lng && rec.loc.lng !== 0) {
+          && rec.loc.lon && rec.loc.lon !== 0) {
             callback();
             return;
         }
         var address = getStringAddress(rec);
         geocoder.geocode( address, function(err, data) {
             if ( data.status !== 'OK' ) {
-                console.log ( address );
-                console.log ( data );
+                notdone.push ( address );
                 callback();
                 return;
             }
-            var loc = data.results[0].geometry.location;
-            rec.loc.lat = loc.lat;
-            rec.loc.lng = loc.long;
-            rec.save();
-            callback();
+            var loc = {
+                lon: data.results[0].geometry.location.lng
+              , lat: data.results[0].geometry.location.lat };
+            rec.setValue ('loc', loc);
+            rec.markModified ('loc');
+            rec.save ( function (err) {
+                if ( !err ) {
+                    console.log( '[' + loc.lat +',' + loc.lon + '] --->  ' + address );
+                } else {
+                    console.log ( 'Error while saving' );
+                }
+                callback();
+              });
         });
     }, function(err) {
         if ( err ) {
             console.log ( err );
         } else {
-            console.log ( 'no err' );
+            console.log ( '\ncomplete' );
+            console.log ( '\n\nNot decoded :-\n\n');
+            console.log ( notdone );
         }
+        process.exit();
     });
 });
 

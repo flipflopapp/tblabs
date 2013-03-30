@@ -45,17 +45,15 @@ app.post('/api/search', function(req, res) {
 
     Centers.find( {"loc":
                     { $near:
-                      { $geometry:
                         { type: "Point",
                           coordinates: latlng },
                         $maxDistance: radius
-                      } }
+                    }
                    }, function(err, list) {
                        if (err) {
                            console.log ( err );
                            res.status(400).json ( err );
                        } else {
-                           console.log ( list );
                            res.status(200).json ( list );
                        }
                    } );
