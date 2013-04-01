@@ -67,5 +67,5 @@ app.post('/admin', function(req,res) {
 });
 
 //app.listen(3000); 
-app.listen(); 
-console.log('Sever is running on port 3000');
+app.listen();
+console.log('Server started');
